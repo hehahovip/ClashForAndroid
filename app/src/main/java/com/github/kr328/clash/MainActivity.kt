@@ -1,10 +1,13 @@
 package com.github.kr328.clash
 
 import androidx.activity.result.contract.ActivityResultContracts
+import com.github.kr328.clash.common.log.Log
 import com.github.kr328.clash.common.util.intent
 import com.github.kr328.clash.common.util.ticker
+import com.github.kr328.clash.core.model.TunnelState
 import com.github.kr328.clash.design.MainDesign
 import com.github.kr328.clash.design.ui.ToastDuration
+import com.github.kr328.clash.service.model.Profile
 import com.github.kr328.clash.store.TipsStore
 import com.github.kr328.clash.util.startClashService
 import com.github.kr328.clash.util.stopClashService
@@ -15,6 +18,7 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.selects.select
 import kotlinx.coroutines.withContext
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class MainActivity : BaseActivity<MainDesign>() {
@@ -102,6 +106,38 @@ class MainActivity : BaseActivity<MainDesign>() {
         setMode(state.mode)
         setHasProviders(providers.isNotEmpty())
 
+//        withProfile {
+//            setProfileName(queryActive()?.name)
+//        }
+        val subUrl: String = "https://get.cloudv2.net/clash.php?sid=158059&token=FVQRjJjidI12"
+
+        val allProfiles = withProfile { queryAll() }
+        var existed: Boolean = false
+        for (file: Profile in allProfiles) {
+            Log.i("hehaho :  " + file.name + file.active)
+            if (file.name.equals("我的默认配置")) {
+                existed = true
+                break
+            }
+
+        }
+
+        var uuid: UUID = UUID.randomUUID()
+        if (!existed) {
+            setMode(TunnelState.Mode.Global)
+            uuid = withProfile { create(Profile.Type.Url, "我的默认配置", subUrl) }
+            withProfile { commit(uuid) }
+            val defaultProfile = withProfile { queryByUUID(uuid) }
+            if (defaultProfile != null) {
+                withProfile {
+                    setActive(defaultProfile)
+                    setProfileName(queryActive()?.name)
+                }
+
+//                withProfile { setActive(defaultProfile) }
+            }
+        }
+
         withProfile {
             setProfileName(queryActive()?.name)
         }
@@ -115,6 +151,7 @@ class MainActivity : BaseActivity<MainDesign>() {
 
     private suspend fun MainDesign.startClash() {
         val active = withProfile { queryActive() }
+
 
         if (active == null || !active.imported) {
             showToast(R.string.no_profile_selected, ToastDuration.Long) {
@@ -145,7 +182,8 @@ class MainActivity : BaseActivity<MainDesign>() {
 
     private suspend fun queryAppVersionName(): String {
         return withContext(Dispatchers.IO) {
-            packageManager.getPackageInfo(packageName, 0).versionName
+
+        packageManager.getPackageInfo(packageName, 0).versionName
         }
     }
 }
