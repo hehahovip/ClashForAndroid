@@ -189,5 +189,6 @@ class MainActivity : BaseActivity<MainDesign>() {
 
     private suspend fun downloadConfig() {
         // http://103.84.110.38:3088/2d73ede939df7d337b28f499db1d335c
+        // http://subscribe.doubleskyline.cf:3088/
     }
 }
