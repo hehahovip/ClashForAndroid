@@ -67,17 +67,17 @@ class MainDesign(context: Context) : Design<MainDesign.Request>(context) {
         }
     }
 
-    suspend fun showAbout(versionName: String) {
-        withContext(Dispatchers.Main) {
-            val binding = DesignAboutBinding.inflate(context.layoutInflater).apply {
-                this.versionName = versionName
-            }
-
-            AlertDialog.Builder(context)
-                .setView(binding.root)
-                .show()
-        }
-    }
+//    suspend fun showAbout(versionName: String) {
+//        withContext(Dispatchers.Main) {
+//            val binding = DesignAboutBinding.inflate(context.layoutInflater).apply {
+//                this.versionName = versionName
+//            }
+//
+//            AlertDialog.Builder(context)
+//                .setView(binding.root)
+//                .show()
+//        }
+//    }
 
     suspend fun showUpdatedTips() {
         withContext(Dispatchers.Main) {

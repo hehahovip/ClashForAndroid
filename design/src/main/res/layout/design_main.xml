@@ -67,7 +67,7 @@
                             android:layout_width="@dimen/main_logo_size"
                             android:layout_height="@dimen/main_logo_size"
                             android:layout_gravity="center"
-                            android:background="@drawable/ic_clash"
+                            android:background="@drawable/ic_sie"
                             android:backgroundTint="?attr/colorLogo" />
                     </FrameLayout>
 
@@ -117,13 +117,13 @@
                     app:icon="@drawable/ic_baseline_swap_vertical_circle"
                     app:text="@string/providers" />
 
-                <com.github.kr328.clash.design.view.LargeActionLabel
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/main_label_margin_vertical"
-                    android:onClick="@{() -> self.request(Request.OpenLogs)}"
-                    app:icon="@drawable/ic_baseline_assignment"
-                    app:text="@string/logs" />
+<!--                <com.github.kr328.clash.design.view.LargeActionLabel-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginVertical="@dimen/main_label_margin_vertical"-->
+<!--                    android:onClick="@{() -> self.request(Request.OpenLogs)}"-->
+<!--                    app:icon="@drawable/ic_baseline_assignment"-->
+<!--                    app:text="@string/logs" />-->
 
                 <com.github.kr328.clash.design.view.LargeActionLabel
                     android:layout_width="match_parent"
@@ -133,21 +133,21 @@
                     app:icon="@drawable/ic_baseline_settings"
                     app:text="@string/settings" />
 
-                <com.github.kr328.clash.design.view.LargeActionLabel
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/main_label_margin_vertical"
-                    android:onClick="@{() -> self.request(Request.OpenHelp)}"
-                    app:icon="@drawable/ic_baseline_help_center"
-                    app:text="@string/help" />
+<!--                <com.github.kr328.clash.design.view.LargeActionLabel-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginVertical="@dimen/main_label_margin_vertical"-->
+<!--                    android:onClick="@{() -> self.request(Request.OpenHelp)}"-->
+<!--                    app:icon="@drawable/ic_baseline_help_center"-->
+<!--                    app:text="@string/help" />-->
 
-                <com.github.kr328.clash.design.view.LargeActionLabel
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/main_label_margin_vertical"
-                    android:onClick="@{() -> self.request(Request.OpenAbout)}"
-                    app:icon="@drawable/ic_baseline_info"
-                    app:text="@string/about" />
+<!--                <com.github.kr328.clash.design.view.LargeActionLabel-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginVertical="@dimen/main_label_margin_vertical"-->
+<!--                    android:onClick="@{() -> self.request(Request.OpenAbout)}"-->
+<!--                    app:icon="@drawable/ic_baseline_info"-->
+<!--                    app:text="@string/about" />-->
             </LinearLayout>
         </ScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

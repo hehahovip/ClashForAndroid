@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="PluralsCandidate">
-    <string name="launch_name">Clash</string>
+    <string name="launch_name">SIE</string>
     <string name="application_name">Clash for Android</string>
 
     <string name="stopped">Stopped</string>

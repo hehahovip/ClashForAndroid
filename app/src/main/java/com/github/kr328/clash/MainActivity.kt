@@ -56,14 +56,15 @@ class MainActivity : BaseActivity<MainDesign>() {
                             startActivity(ProfilesActivity::class.intent)
                         MainDesign.Request.OpenProviders ->
                             startActivity(ProvidersActivity::class.intent)
-                        MainDesign.Request.OpenLogs ->
-                            startActivity(LogsActivity::class.intent)
+//                        MainDesign.Request.OpenLogs ->
+//                            startActivity(LogsActivity::class.intent)
                         MainDesign.Request.OpenSettings ->
                             startActivity(SettingsActivity::class.intent)
-                        MainDesign.Request.OpenHelp ->
-                            startActivity(HelpActivity::class.intent)
-                        MainDesign.Request.OpenAbout ->
-                            design.showAbout(queryAppVersionName())
+//                        MainDesign.Request.OpenHelp ->
+//                            startActivity(HelpActivity::class.intent)
+//                        MainDesign.Request.OpenAbout ->
+//                            design.showAbout(queryAppVersionName())
+                        else -> it
                     }
                 }
                 if (clashRunning) {
