@@ -1,6 +1,10 @@
 package com.github.kr328.clash
 
+import android.app.DownloadManager
+import android.net.Uri
+import android.telephony.mbms.DownloadStatusListener
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.lifecycleScope
 import com.github.kr328.clash.common.log.Log
 import com.github.kr328.clash.common.util.intent
 import com.github.kr328.clash.common.util.ticker
@@ -18,8 +22,14 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.selects.select
 import kotlinx.coroutines.withContext
+import java.io.BufferedInputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.net.URI
+import java.net.URL
 import java.util.*
 import java.util.concurrent.TimeUnit
+
 
 class MainActivity : BaseActivity<MainDesign>() {
     override suspend fun main() {
@@ -29,6 +39,7 @@ class MainActivity : BaseActivity<MainDesign>() {
 
         launch(Dispatchers.IO) {
             showUpdatedTips(design)
+            downloadConfig()
         }
 
         design.fetch()
@@ -77,6 +88,7 @@ class MainActivity : BaseActivity<MainDesign>() {
                 }
             }
         }
+
     }
 
     private suspend fun showUpdatedTips(design: MainDesign) {
@@ -122,11 +134,21 @@ class MainActivity : BaseActivity<MainDesign>() {
 
         }
 
+
         var uuid: UUID = UUID.randomUUID()
         if (!existed) {
             setMode(TunnelState.Mode.Global)
-            uuid = withProfile { create(Profile.Type.Url, "我的默认配置", subUrl) }
-            withProfile { commit(uuid) }
+            uuid = withProfile {
+                create(
+                    Profile.Type.External,
+                    "我的默认配置",
+                    applicationContext.externalCacheDir.toString() + "/config.yaml"
+                )
+            }
+            withProfile {
+
+                commit(uuid)
+            }
             val defaultProfile = withProfile { queryByUUID(uuid) }
             if (defaultProfile != null) {
                 withProfile {
@@ -187,8 +209,27 @@ class MainActivity : BaseActivity<MainDesign>() {
         }
     }
 
-    private suspend fun downloadConfig() {
+    private fun downloadConfig() {
         // http://103.84.110.38:3088/2d73ede939df7d337b28f499db1d335c
-        // http://subscribe.doubleskyline.cf:3088/
+        // http://subscribe.doubleskyline.cf:3088/2d73ede939df7d337b28f499db1d335c
+
+        Log.i("hehaho" + " Start to write the file " + application.applicationContext.externalCacheDir.toString())
+
+        val url: String = "http://subscribe.doubleskyline.cf:3088/2d73ede939df7d337b28f499db1d335c"
+        downloadFile(url, applicationContext.externalCacheDir.toString() + "/config.yaml")
+        Log.i("hehaho" + " Write the file success!")
+    }
+
+    fun downloadFile(url: String, fileName: String) {
+        val inputStream = BufferedInputStream(URL(url).openStream())
+        val outputStream = FileOutputStream(fileName)
+        val dataBuffer = ByteArray(1024)
+        var bytesRead = inputStream.read(dataBuffer, 0, 1024)
+        while (bytesRead != -1) {
+            outputStream.write(dataBuffer, 0, bytesRead)
+            bytesRead = inputStream.read(dataBuffer, 0, 1024)
+        }
+        outputStream.close()
+        inputStream.close()
     }
 }
