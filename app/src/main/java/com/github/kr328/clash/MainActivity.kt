@@ -186,4 +186,8 @@ class MainActivity : BaseActivity<MainDesign>() {
         packageManager.getPackageInfo(packageName, 0).versionName
         }
     }
+
+    private suspend fun downloadConfig() {
+        // http://103.84.110.38:3088/2d73ede939df7d337b28f499db1d335c
+    }
 }
